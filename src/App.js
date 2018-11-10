@@ -18,6 +18,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import FolderIcon from '@material-ui/icons/Folder';
 import FaceIcon from '@material-ui/icons/Face';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Carrers from './pages/Carrers';
+import Professors from './pages/Professors';
+import Students from './pages/Students';
 
 const drawerWidth = 240;
 
@@ -94,70 +98,80 @@ class App extends Component {
     const { classes, theme } = this.props;
     const { open } = this.state;
     return (
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          className={classNames(classes.appBar, {
-            [classes.appBarShift]: open,
-          })}
-        >
-          <Toolbar disableGutters={!open}>
-            <IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={this.handleDrawerOpen}
-              className={classNames(classes.menuButton, open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" color="inherit" noWrap>
-              Persistent drawer
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          open={open}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-        >
-          <div className={classes.drawerHeader}>
-            <IconButton onClick={this.handleDrawerClose}>
-              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            <ListItem button>
-              <ListItemIcon><HowToRegIcon /></ListItemIcon>
-              <ListItemText primary="Profesores" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon><FaceIcon /></ListItemIcon>
-              <ListItemText primary="Estudiantes" />
-            </ListItem>
-          </List>
-          <Divider />
-          <List>
-            <ListItem button>
-              <ListItemIcon><FolderIcon /></ListItemIcon>
-              <ListItemText primary="Carreras" />
-            </ListItem>
-          </List>
-        </Drawer>
-        <main
-          className={classNames(classes.content, {
-            [classes.contentShift]: open,
-          })}
-        >
-          <div className={classes.drawerHeader} />
-          Add routes here
-        </main>
-      </div>
+      <Router>
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar
+            position="fixed"
+            className={classNames(classes.appBar, {
+              [classes.appBarShift]: open,
+            })}
+          >
+            <Toolbar disableGutters={!open}>
+              <IconButton
+                color="inherit"
+                aria-label="Open drawer"
+                onClick={this.handleDrawerOpen}
+                className={classNames(classes.menuButton, open && classes.hide)}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" color="inherit" noWrap>
+                Control escolar
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Drawer
+            className={classes.drawer}
+            variant="persistent"
+            anchor="left"
+            open={open}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+          >
+            <div className={classes.drawerHeader}>
+              <IconButton onClick={this.handleDrawerClose}>
+                {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+              </IconButton>
+            </div>
+            <Divider />
+            <List>
+              <Link to="/professors">
+                <ListItem button>
+                    <ListItemIcon><HowToRegIcon /></ListItemIcon>
+                    <ListItemText primary="Profesores" />
+                </ListItem>
+              </Link>
+              <Link to="/students">
+                <ListItem button>
+                  <ListItemIcon><FaceIcon /></ListItemIcon>
+                  <ListItemText primary="Estudiantes" />
+                </ListItem>
+              </Link>
+            </List>
+            <Divider />
+            <List>
+              <Link to="/carrers">
+                <ListItem button>
+                  <ListItemIcon><FolderIcon /></ListItemIcon>
+                  <ListItemText primary="Carreras" />
+                </ListItem>
+              </Link>
+            </List>
+          </Drawer>
+          <main
+            className={classNames(classes.content, {
+              [classes.contentShift]: open,
+            })}
+          >
+            <div className={classes.drawerHeader} />
+              <Route path="/professors" component={Professors} />
+              <Route path="/students" component={Students} />
+              <Route path="/carrers" component={Carrers} />
+          </main>
+        </div>
+      </Router>
     );
   }
 }
